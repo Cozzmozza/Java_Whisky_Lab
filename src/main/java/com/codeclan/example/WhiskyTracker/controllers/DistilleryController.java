@@ -17,7 +17,12 @@ public class DistilleryController {
     DistilleryRepository distilleryRepository;
 
     @GetMapping(value = "/distilleries")
-    public ResponseEntity<List<Distillery>> getAllDistilleries(){
+    public ResponseEntity<List<Distillery>> getAllDistilleries(
+            @RequestParam(name="region", required = false) String region
+    ){
+        if(region != null){
+            return new ResponseEntity<List<Distillery>>(distilleryRepository.findByRegion(region), HttpStatus.OK);
+        }
         return new ResponseEntity<>(distilleryRepository.findAll(), HttpStatus.OK);
     }
 
@@ -29,6 +34,6 @@ public class DistilleryController {
     @PostMapping(value = "/distilleries")
     public ResponseEntity<Distillery> postDistillery(@RequestBody Distillery distillery){
         distilleryRepository.save(distillery);
-        return new ResponseEntity<>(distillery, HttpStatus.OK);
+        return new ResponseEntity<>(distillery, HttpStatus.CREATED);
     }
 }

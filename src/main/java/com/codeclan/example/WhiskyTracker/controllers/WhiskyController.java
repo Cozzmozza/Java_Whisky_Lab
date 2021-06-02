@@ -17,7 +17,19 @@ public class WhiskyController {
     WhiskyRepository whiskyRepository;
 
     @GetMapping(value = "/whiskies")
-    public ResponseEntity<List<Whisky>> getAllWhiskies(){
+    public ResponseEntity<List<Whisky>> getAllWhiskies(
+            @RequestParam(name = "year", required = false) Integer year,
+            @RequestParam(name = "age", required = false) Integer age,
+            @RequestParam(name = "distilleryId", required = false) Long distilleryId
+    ){
+        if (year != null){
+            return new ResponseEntity<List<Whisky>>(whiskyRepository.findByYear(year), HttpStatus.OK);
+        }
+        if (distilleryId != null && age != null){
+//            return new ResponseEntity<List<Whisky>>(whiskyRepository.findByWhiskiesAgeAndDistilleryId(age, distilleryId), HttpStatus.OK);
+            return new ResponseEntity<List<Whisky>>(whiskyRepository.findByAgeAndDistilleryId(age, distilleryId), HttpStatus.OK);
+
+        }
         return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
     }
 
@@ -29,6 +41,6 @@ public class WhiskyController {
     @PostMapping (value = "/whiskies")
     public ResponseEntity<Whisky> postWhisky(@RequestBody Whisky whisky){
         whiskyRepository.save(whisky);
-        return new ResponseEntity<>(whisky, HttpStatus.OK);
+        return new ResponseEntity<>(whisky, HttpStatus.CREATED);
     }
 }
