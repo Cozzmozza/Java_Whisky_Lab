@@ -16,12 +16,19 @@ public class DistilleryController {
     @Autowired
     DistilleryRepository distilleryRepository;
 
+//    Extension:
+//    Get distilleries that have whiskies that are 12 years old
+
     @GetMapping(value = "/distilleries")
     public ResponseEntity<List<Distillery>> getAllDistilleries(
-            @RequestParam(name="region", required = false) String region
+            @RequestParam(name="region", required = false) String region,
+            @RequestParam(name="year", required = false) Integer year
     ){
-        if(region != null){
+        if (region != null){
             return new ResponseEntity<List<Distillery>>(distilleryRepository.findByRegion(region), HttpStatus.OK);
+        }
+        if (year != null){
+            return new ResponseEntity<List<Distillery>>(distilleryRepository.findByWhiskiesYear(year), HttpStatus.OK);
         }
         return new ResponseEntity<>(distilleryRepository.findAll(), HttpStatus.OK);
     }
