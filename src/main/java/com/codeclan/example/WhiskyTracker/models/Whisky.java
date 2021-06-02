@@ -1,15 +1,31 @@
 package com.codeclan.example.WhiskyTracker.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "whiskys")
 public class Whisky {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "year")
     private int year;
 
+    @Column(name = "age")
     private int age;
 
+    @ManyToOne
+    @JsonIgnoreProperties({"whiskies"})
+    @JoinColumn(name = "distillery_id", nullable = false)
     private Distillery distillery;
 
     public Whisky(String name, int year, int age, Distillery distillery) {
