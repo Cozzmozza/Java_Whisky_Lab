@@ -18,6 +18,8 @@ public class DistilleryController {
 
 //    Extension:
 //    Get distilleries that have whiskies that are 12 years old
+//    Going to interpret this as entering an integer of whisky year, and getting the list of distilleries back
+//    Alternative would be bringing back 12 every time, with another query like "get12=true"
 
     @GetMapping(value = "/distilleries")
     public ResponseEntity<List<Distillery>> getAllDistilleries(

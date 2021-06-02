@@ -20,7 +20,7 @@ public class WhiskyController {
     public ResponseEntity<List<Whisky>> getAllWhiskies(
             @RequestParam(name = "year", required = false) Integer year,
             @RequestParam(name = "age", required = false) Integer age,
-            @RequestParam(name = "distilleryId", required = false) Long distilleryId,
+            @RequestParam(name = "distilleryId", required = false) Long distilleryId, // Could do name instead?
             @RequestParam(name = "region", required = false) String region
     ){
         if (year != null){
