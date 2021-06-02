@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class WhiskyController {
@@ -21,7 +22,7 @@ public class WhiskyController {
     }
 
     @GetMapping(value = "/whiskies/{id}")
-    public ResponseEntity getWhisky(@PathVariable Long id){
+    public ResponseEntity<Optional<Whisky>> getWhisky(@PathVariable Long id){
         return new ResponseEntity<>(whiskyRepository.findById(id), HttpStatus.OK);
     }
 
